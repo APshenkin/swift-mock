@@ -7,3 +7,6 @@ examples/out/
 .idea/
 .editorconfig
 node_modules/*
+.eslintignore
+.eslintrc
+.gitignore

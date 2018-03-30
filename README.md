@@ -13,7 +13,7 @@ JavaScript SWIFT mock that can emulate SWIFT network, parse and generate SWIFT [
 
 ## Installation
 ```Shell
-$ npm install --save swift-parser
+$ npm install --save swift-mock
 ```
 
 ## Usage

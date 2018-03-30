@@ -45,7 +45,7 @@ swift.on((msg) => {
 })
 
 
-swift.runSwift();
+swift.run();
 
 ```
 

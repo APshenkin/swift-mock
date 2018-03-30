@@ -5,3 +5,4 @@ examples/files/
 examples/out/
 .idea/
 node_modules/
+.DS_Store

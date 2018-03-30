@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const file = fs.readFileSync('./examples/files/SWIFT_509_ack2.fin', { encoding: 'UTF-8' });
 
-console.log('Got SWIFT message:')
+console.log('Got SWIFT message:');
 console.log(file);
 
 console.log('Parse SWIFT message:');

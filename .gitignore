@@ -4,3 +4,4 @@ in/
 examples/files/
 examples/out/
 .idea/
+node_modules/

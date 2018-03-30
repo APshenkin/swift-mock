@@ -1,6 +1,8 @@
 # SWIFT Mock
 JavaScript SWIFT mock that can emulate SWIFT network, parse and generate SWIFT [ISO 15022](http://www.iso15022.org/) messages. Swift parser was taked from [swift-parser](https://github.com/pstodulka/swift-parser), but it was refactored (moving to ES6 syntax, update API). Mock and message generator were created from scratch.
 
+[![Test Status](https://travis-ci.org/APshenkin/swift-mock.svg?branch=master)](https://travis-ci.org/APshenkin/swift-mock)
+
 ## Features
 * parse FIN MT message defined by the [ISO 15022](http://www.iso15022.org/) standard
 * generate FIN MT messages

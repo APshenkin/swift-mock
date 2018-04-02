@@ -1,6 +1,6 @@
 {
   "name": "swift-mock",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "SWIFT mock that emulates SWIFT network, parse and generate SWIFT ISO 15022 messages.",
   "dependencies": {
     "xregexp": "~2.0.0",

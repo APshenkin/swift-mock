@@ -61,7 +61,8 @@ Initializes a new instance of `SWIFT Mock` using given metadata. If `metadata` i
 * `logLevel` - logging level (default: 0)
 * `fieldPatterns` - path to block 4 field patterns
 * `saveIncommingImages` - save parsed incomming messages in memory (default: `false`)
-* `deleteFiles` - delete incomming messages after reading (default: `false`)
+* `delete` - delete incomming messages after reading (default: `false`)
+* `elastic` - format log messages in Elastic format or not (default: `false`)
 
 ### swift.parse(swift)
 Parses the `swift` message. The line breaks of `swift` must be in Unix format (`\n`).

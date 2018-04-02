@@ -127,6 +127,10 @@
     "pattern": ":4!c//4!c",
     "fieldNames": "(Qualifier)(Indicator)"
   },
+  "23B": {
+    "pattern": "4!c",
+    "fieldNames": "(Type)"
+  },
   "23G": {
     "pattern": "4!c[/4!c]",
     "fieldNames": "(Function)(Subfunction)"
@@ -204,6 +208,10 @@
     "fieldNames": "(Currency)(Amount)"
   },
   "32M": {
+    "pattern": "3!a15d",
+    "fieldNames": "(Currency)(Amount)"
+  },
+  "33B": {
     "pattern": "3!a15d",
     "fieldNames": "(Currency)(Amount)"
   },
@@ -307,6 +315,10 @@
     "pattern": "12d",
     "fieldNames": "(Rate)"
   },
+  "50K": {
+    "pattern": "[/34x]$4*35x",
+    "fieldNames": "(Account Number)$(Name and Address)"
+  },
   "52A": {
     "pattern": "[/1!a][/34x]$4!a2!a2!c[3!c]",
     "fieldNames": "(Party Identifier)$(Identifier Code)"
@@ -318,6 +330,10 @@
   "53A": {
     "pattern": "[/1!a][/34x]$4!a2!a2!c[3!c]",
     "fieldNames": "(Party Identifier)$(Identifier Code)"
+  },
+  "53B": {
+    "pattern": "[/34x]",
+    "fieldNames": "(Senders Correspondent)"
   },
   "53C": {
     "pattern": "/34x",
@@ -338,6 +354,10 @@
   "57D": {
     "pattern": "[/1!a][/34x]$4*35x",
     "fieldNames": "(Party Identifier)$(Name and Address)"
+  },
+  "59": {
+    "pattern": "[/34x]$4*35x",
+    "fieldNames": "(Account Number)$(Name and Address)"
   },
   "67A": {
     "pattern": "6!n[/6!n]",
@@ -390,6 +410,10 @@
   "70G": {
     "pattern": ":4!c//10*35z",
     "fieldNames": "(Qualifier)(Narrative)"
+  },
+  "71A": {
+    "pattern": "3!a",
+    "fieldNames": "(Code)"
   },
   "71B": {
     "pattern": "6*35x",

@@ -94,11 +94,11 @@ describe('FieldRegexpFactory', () => {
 
   it('one multiline field', () => {
     const r = factory.createRegexp('5*35x', '(Narrative)');
-    assert.equal(r, '^(?<Narrative>.{1,35}(\r\n.{1,35}){0,4})$');
+    assert.equal(r, '^(?<Narrative>.{1,35}(\n.{1,35}){0,4})$');
   });
   it('more multiline field', () => {
     const r = factory.createRegexp('4!c//4*35x', '(Qualifier)(Narrative)');
-    assert.equal(r, '^(?<Qualifier>.{4})//(?<Narrative>.{1,35}(\r\n.{1,35}){0,3})$');
+    assert.equal(r, '^(?<Qualifier>.{4})//(?<Narrative>.{1,35}(\n.{1,35}){0,3})$');
   });
 
 
@@ -143,31 +143,31 @@ describe('FieldRegexpFactory', () => {
   // multiline
   it('multiline pattern with mandatory parts', () => {
     const r = factory.createRegexp('3!a$5!a', '(First)$(Second)');
-    assert.equal(r, '^(?<First>.{3})\r\n(?<Second>.{5})$');
+    assert.equal(r, '^(?<First>.{3})\n(?<Second>.{5})$');
   });
   it('multiline pattern with optional first part', () => {
     const r = factory.createRegexp('[3!a]$5!a', '(First)$(Second)');
-    assert.equal(r, '^(?<First>.{3})?(\r\n)?(?<Second>.{5})$');
+    assert.equal(r, '^(?<First>.{3})?(\n)?(?<Second>.{5})$');
   });
   it('multiline pattern with optional second part', () => {
     const r = factory.createRegexp('3!a$[5!a]', '(First)$(Second)');
-    assert.equal(r, '^(?<First>.{3})(\r\n)?(?<Second>.{5})?$');
+    assert.equal(r, '^(?<First>.{3})(\n)?(?<Second>.{5})?$');
   });
   it('multiline pattern with optional both parts', () => {
     const r = factory.createRegexp('[3!a]$[5!a]', '(First)$(Second)');
-    assert.equal(r, '^(?<First>.{3})?(\r\n)?(?<Second>.{5})?$');
+    assert.equal(r, '^(?<First>.{3})?(\n)?(?<Second>.{5})?$');
   });
   it('multiline pattern with multiple fields', () => {
     const r = factory.createRegexp('[/1!a][/34x]$4!a2!a2!c[3!c]', '(PartyIdentifier)$(IdentifierCode)');
-    assert.equal(r, '^(?<PartyIdentifier>(/.{1})?(/.{1,34})?)(\r\n)?(?<IdentifierCode>.{4}.{2}.{2}(.{3})?)$');
+    assert.equal(r, '^(?<PartyIdentifier>(/.{1})?(/.{1,34})?)(\n)?(?<IdentifierCode>.{4}.{2}.{2}(.{3})?)$');
   });
   it('multiline pattern with multiline field', () => {
     const r = factory.createRegexp('[/1!a][/34x]$4*35x', '(PartyIdentifier)$(NameAndAddress)');
-    assert.equal(r, '^(?<PartyIdentifier>(/.{1})?(/.{1,34})?)(\r\n)?(?<NameAndAddress>.{1,35}(\r\n.{1,35}){0,3})$');
+    assert.equal(r, '^(?<PartyIdentifier>(/.{1})?(/.{1,34})?)(\n)?(?<NameAndAddress>.{1,35}(\n.{1,35}){0,3})$');
   });
   it('multiline pattern with three lines', () => {
     const r = factory.createRegexp('3!n$6!n$[4!n6!n]', '(MTNumber)$(Date)$(SessionNumber)(ISN)');
-    assert.equal(r, '^(?<MTNumber>.{3})\r\n(?<Date>.{6})(\r\n)?((?<SessionNumber>.{4})(?<ISN>.{6}))?$');
+    assert.equal(r, '^(?<MTNumber>.{3})\n(?<Date>.{6})(\n)?((?<SessionNumber>.{4})(?<ISN>.{6}))?$');
   });
 
   // narrative
@@ -298,22 +298,22 @@ describe('FieldParser', () => {
     assert.deepEqual(result, { Qualifier: 'ADTX', Narrative: narrative });
   });
   it('narrative multiline', () => {
-    const narrative = '++ ADDITIONAL INFORMATION ++SHS DEL\r\nTO YOU UPON RECEIPT PLUS\r\nHKD80.64';
+    const narrative = '++ ADDITIONAL INFORMATION ++SHS DEL\nTO YOU UPON RECEIPT PLUS\nHKD80.64';
     const result = parser.parse('70G', `ADTX//${narrative}`);
     assert.deepEqual(result, { Qualifier: 'ADTX', Narrative: narrative });
   });
   it('narrative charset z', () => {
-    const narrative = "+------------- REPURCHASE OFFER / -------------+\r\n+------------ CONSENT SOLICITATION ------------+\r\n.\r\nCONTINUATION OF SWIFT MT564/568 SENT WITH CORP.\r\nREF. 294166.\r\n.\r\nPROCEEDS:\r\n.\r\n1/(A) TOTAL CONSIDERATION:\r\nHOLDERS WHO VALIDLY TENDER THEIR NOTES BEFORE\r\nTHE EARLY TENDER DEADLINE AND WHOSE NOTES ARE\r\nACCEPTED FOR PURCHASE WILL RECEIVE USD 1'170.87\r\nFOR EACH USD 1'000 PRINCIPAL AMOUNT.\r\n(THE TOTAL CONSIDERATION INCLUDES A CONSENT\r\nPAYMENT OF USD 30.00 PER USD 1'000 PRINCIPAL\r\nAMOUNT)\r\n.\r\n1/(B) OFFER CONSIDERATION:\r\nHOLDERS WHO VALIDLY TENDER THEIR NOTES AFTER THE\r\nEARLY TENDER DEADLINE AND WHOSE NOTES ARE\r\nACCEPTED FOR PURCHASE WILL RECEIVE USD 1'140.87\r\nFOR EACH USD 1'000 PRINCIPAL AMOUNT.\r\n.\r\n2/ IN ADDITION, AN AMOUNT IN CASH FOR ACCRUED\r\nAND UNPAID INTEREST WILL BE PAID, WHICH WILL BE\r\nHANDLED BY OUR INCOME DEPARTMENT.\r\n.\r\nTHE CONSENT PAYMENT IS N-O-T IRS REPORTABLE WITH\r\nINCOME CODE 50.\r\n.\r\nPOSSIBLE EFFECTS ON UNTENDERED NOTES:\r\nAS SOON AS REASONABLY PRACTICABLE FOLLOWING THE\r\nFINANCING, THE COMPANY CURRENTLY INTENDS, BUT IS\r\nNOT OBLIGATED, TO CALL FOR REDEMPTION ALL OF THE\r\nNOTES THAT REMAIN OUTSTANDING FOLLOWING THE\r\nCONSUMMATION OF THE FINANCING IN ACCORDANCE WITH\r\nTHE PROVISIONS OF THE INDENTURE, AND AT THAT\r\nTIME TO SATISFY AND DISCHARGE THE INDENTURE IN\r\nACCORDANCE WITH ITS TERMS. PLEASE FIND FURTHER\r\nINFORMATION TO UNTENDERED NOTES ON PAGES 6, 10\r\nAND 20-21 IN THE 'PROSPECTUS'.\r\n.\r\nCONDITIONS OF THE OFFER:\r\nTHE OFFER IS NOT CONDITIONED UPON ANY MINIMUM\r\nAMOUNT OF NOTES BEING TENDERED OR ANY OF THE\r\nPROPOSED AMENDMENTS BECOMING OPERATIVE. THE\r\nOFFER IS HOWEVER SUBJECT TO THE SATISFACITON OF\r\nTHE FINANCING CONDITION AND THE GENERAL\r\nCONDITIONS.\r\n.\r\nADOPTION OF THE PROPOSED AMENDMENTS ARE SUBJECT\r\nTO COMPANY'S RECEIPT OF THE RELEVANT REQUISITE\r\nCONSENTS, SATISFACTION OF THE FINANCING\r\nCONDITION AND CONSUMMATION OF THE OFFER.\r\n.\r\nPLEASE FIND FULL DESCRIPTION OF THE OFFER\r\nCONDITIONS ON PAGES III AND 11-13 IN THE\r\n'PROSPECTUS'.\r\n.\r\nTIMETABLE:\r\nWITHDRAWAL DEADLINE: PLEASE FULLY REFER TO PAGE\r\nIV IN THE 'PROSPECTUS'\r\n.\r\nRESTRICTIONS: NONE\r\nINVESTORS MUST VERIFY THAT THEY ARE NOT ACTING\r\nAGAINST THEIR COUNTRY'S REGULATIONS.\r\n.\r\nWITH YOUR INSTRUCTION YOU CONFIRM YOUR\r\nELIGIBILITY TO PARTICIPATE IN THE OFFER.\r\n.\r\nTHE 'PROSPECTUS' IS AVAILABLE IN CAES OR AT SIX\r\nSIS UPON REQUEST.\r\n.\r\n+++++++++ EARLY RESULTS AND SETTLEMENT +++++++++\r\n.\r\nAS OF THE EARLY TENDER DEADLINE USD 598'620'000\r\nAGGREGATE PRINCIPAL AMOUNT, OR APPROXIMATELY\r\n99.8 PCT OF THE NOTES HAVE BEEN VALIDLY TENDERED\r\nAND THE RELATED CONSENTS HAVE BEEN VALIDLY\r\nDELIVERED.\r\n.\r\nWITH THE RECEIPT OF THE REQUISITE CONSENTS, THE\r\nCOMPANY HAS EXECUTED A SUPPLEMENTAL INDENTURE\r\nGOVERNING THE NOTES, WHICH WILL AMEND THE\r\nINDENTURE UNDER WHICH THE NOTES WERE ISSUED TO\r\nELIMINATE SUBSTANTIALLY ALL OF THE RESTRICTIVE\r\nCOVENANTS AND EVENTS OF DEFAULT AND RELATED\r\nPROVISIONS IN THE INDENTURE. THE AMENDMENTS TO\r\nTHE INDENTURE WILL BECOME OPERATIVE UPON PAYMENT\r\nFOR NOTES VALIDLY TENDERED PRIOR TO THE EARLY\r\nTENDER DEADLINE MADE BY THE COMPANY.\r\n.\r\nHOLDERS WHO PARTICIPATED IN THE OFFER AND WHOSE\r\nNOTES HAVE BEEN ACCEPTED WILL BE CREDITED TODAY,\r\nWITH VALUE DATE 08.02.2013, WITH THE FOLLOWING\r\nCASH AMOUNT (FOR EACH USD 1'000 P.A.):\r\n.\r\nPURCHASE PRICE: USD 1'140.87\r\nCONSENT PAYMENT: USD 30.00\r\nACCRUED INTEREST: USD 23.631944\r\n(RATE: 10.25 PCT / DAYS: 83/360)\r\n.\r\nTHE 'EARLY RESULTS ANNOUNCEMENT' IS AVAILABLE IN\r\nCAES OR AT SIX SIS UPON REQUEST.\r\n.\r\nSTATUS: COMPLETE\r\n.\r\nFOR ANY QUERIES PLEASE CONTACT:\r\nCABO.GROUP(AT)ISIS.SISCLEAR.COM";
+    const narrative = "+------------- REPURCHASE OFFER / -------------+\n+------------ CONSENT SOLICITATION ------------+\n.\nCONTINUATION OF SWIFT MT564/568 SENT WITH CORP.\nREF. 294166.\n.\nPROCEEDS:\n.\n1/(A) TOTAL CONSIDERATION:\nHOLDERS WHO VALIDLY TENDER THEIR NOTES BEFORE\nTHE EARLY TENDER DEADLINE AND WHOSE NOTES ARE\nACCEPTED FOR PURCHASE WILL RECEIVE USD 1'170.87\nFOR EACH USD 1'000 PRINCIPAL AMOUNT.\n(THE TOTAL CONSIDERATION INCLUDES A CONSENT\nPAYMENT OF USD 30.00 PER USD 1'000 PRINCIPAL\nAMOUNT)\n.\n1/(B) OFFER CONSIDERATION:\nHOLDERS WHO VALIDLY TENDER THEIR NOTES AFTER THE\nEARLY TENDER DEADLINE AND WHOSE NOTES ARE\nACCEPTED FOR PURCHASE WILL RECEIVE USD 1'140.87\nFOR EACH USD 1'000 PRINCIPAL AMOUNT.\n.\n2/ IN ADDITION, AN AMOUNT IN CASH FOR ACCRUED\nAND UNPAID INTEREST WILL BE PAID, WHICH WILL BE\nHANDLED BY OUR INCOME DEPARTMENT.\n.\nTHE CONSENT PAYMENT IS N-O-T IRS REPORTABLE WITH\nINCOME CODE 50.\n.\nPOSSIBLE EFFECTS ON UNTENDERED NOTES:\nAS SOON AS REASONABLY PRACTICABLE FOLLOWING THE\nFINANCING, THE COMPANY CURRENTLY INTENDS, BUT IS\nNOT OBLIGATED, TO CALL FOR REDEMPTION ALL OF THE\nNOTES THAT REMAIN OUTSTANDING FOLLOWING THE\nCONSUMMATION OF THE FINANCING IN ACCORDANCE WITH\nTHE PROVISIONS OF THE INDENTURE, AND AT THAT\nTIME TO SATISFY AND DISCHARGE THE INDENTURE IN\nACCORDANCE WITH ITS TERMS. PLEASE FIND FURTHER\nINFORMATION TO UNTENDERED NOTES ON PAGES 6, 10\nAND 20-21 IN THE 'PROSPECTUS'.\n.\nCONDITIONS OF THE OFFER:\nTHE OFFER IS NOT CONDITIONED UPON ANY MINIMUM\nAMOUNT OF NOTES BEING TENDERED OR ANY OF THE\nPROPOSED AMENDMENTS BECOMING OPERATIVE. THE\nOFFER IS HOWEVER SUBJECT TO THE SATISFACITON OF\nTHE FINANCING CONDITION AND THE GENERAL\nCONDITIONS.\n.\nADOPTION OF THE PROPOSED AMENDMENTS ARE SUBJECT\nTO COMPANY'S RECEIPT OF THE RELEVANT REQUISITE\nCONSENTS, SATISFACTION OF THE FINANCING\nCONDITION AND CONSUMMATION OF THE OFFER.\n.\nPLEASE FIND FULL DESCRIPTION OF THE OFFER\nCONDITIONS ON PAGES III AND 11-13 IN THE\n'PROSPECTUS'.\n.\nTIMETABLE:\nWITHDRAWAL DEADLINE: PLEASE FULLY REFER TO PAGE\nIV IN THE 'PROSPECTUS'\n.\nRESTRICTIONS: NONE\nINVESTORS MUST VERIFY THAT THEY ARE NOT ACTING\nAGAINST THEIR COUNTRY'S REGULATIONS.\n.\nWITH YOUR INSTRUCTION YOU CONFIRM YOUR\nELIGIBILITY TO PARTICIPATE IN THE OFFER.\n.\nTHE 'PROSPECTUS' IS AVAILABLE IN CAES OR AT SIX\nSIS UPON REQUEST.\n.\n+++++++++ EARLY RESULTS AND SETTLEMENT +++++++++\n.\nAS OF THE EARLY TENDER DEADLINE USD 598'620'000\nAGGREGATE PRINCIPAL AMOUNT, OR APPROXIMATELY\n99.8 PCT OF THE NOTES HAVE BEEN VALIDLY TENDERED\nAND THE RELATED CONSENTS HAVE BEEN VALIDLY\nDELIVERED.\n.\nWITH THE RECEIPT OF THE REQUISITE CONSENTS, THE\nCOMPANY HAS EXECUTED A SUPPLEMENTAL INDENTURE\nGOVERNING THE NOTES, WHICH WILL AMEND THE\nINDENTURE UNDER WHICH THE NOTES WERE ISSUED TO\nELIMINATE SUBSTANTIALLY ALL OF THE RESTRICTIVE\nCOVENANTS AND EVENTS OF DEFAULT AND RELATED\nPROVISIONS IN THE INDENTURE. THE AMENDMENTS TO\nTHE INDENTURE WILL BECOME OPERATIVE UPON PAYMENT\nFOR NOTES VALIDLY TENDERED PRIOR TO THE EARLY\nTENDER DEADLINE MADE BY THE COMPANY.\n.\nHOLDERS WHO PARTICIPATED IN THE OFFER AND WHOSE\nNOTES HAVE BEEN ACCEPTED WILL BE CREDITED TODAY,\nWITH VALUE DATE 08.02.2013, WITH THE FOLLOWING\nCASH AMOUNT (FOR EACH USD 1'000 P.A.):\n.\nPURCHASE PRICE: USD 1'140.87\nCONSENT PAYMENT: USD 30.00\nACCRUED INTEREST: USD 23.631944\n(RATE: 10.25 PCT / DAYS: 83/360)\n.\nTHE 'EARLY RESULTS ANNOUNCEMENT' IS AVAILABLE IN\nCAES OR AT SIX SIS UPON REQUEST.\n.\nSTATUS: COMPLETE\n.\nFOR ANY QUERIES PLEASE CONTACT:\nCABO.GROUP(AT)ISIS.SISCLEAR.COM";
     const result = parser.parse('70F', `ADTX//${narrative}`);
     assert.deepEqual(result, { Qualifier: 'ADTX', Narrative: narrative });
   });
 
   it('identification of security with ISIN and description', () => {
-    const result = parser.parse('35B', 'ISIN US8175651046\r\n/CH/969683\r\nSERVICE CORP INTL SHS');
-    assert.deepEqual(result, { 'Identification of Security': 'US8175651046', 'Description of Security': '/CH/969683\r\nSERVICE CORP INTL SHS' });
+    const result = parser.parse('35B', 'ISIN US8175651046\n/CH/969683\nSERVICE CORP INTL SHS');
+    assert.deepEqual(result, { 'Identification of Security': 'US8175651046', 'Description of Security': '/CH/969683\nSERVICE CORP INTL SHS' });
   });
   it('identification of security without ISIN', () => {
-    const content = '/CH/969683\r\nSERVICE CORP INTL SHS';
+    const content = '/CH/969683\nSERVICE CORP INTL SHS';
     const result = parser.parse('35B', content);
     assert.deepEqual(result, { 'Description of Security': content });
   });
@@ -322,12 +322,12 @@ describe('FieldParser', () => {
     assert.deepEqual(result, { 'Identification of Security': 'US8175651046' });
   });
   it('multiline pattern - first line present', () => {
-    const result = parser.parse('53D', '/X/123456\r\nname\r\naddres\r\naddress2');
-    assert.deepEqual(result, { 'Party Identifier': '/X/123456', 'Name and Address': 'name\r\naddres\r\naddress2' });
+    const result = parser.parse('53D', '/X/123456\nname\naddres\naddress2');
+    assert.deepEqual(result, { 'Party Identifier': '/X/123456', 'Name and Address': 'name\naddres\naddress2' });
   });
   it('multiline pattern - first line missing', () => {
-    const result = parser.parse('53D', 'name\r\naddres\r\naddress2');
-    assert.deepEqual(result, { 'Name and Address': 'name\r\naddres\r\naddress2', 'Party Identifier': '' }); // the fully optional party matches an empty string
+    const result = parser.parse('53D', 'name\naddres\naddress2');
+    assert.deepEqual(result, { 'Name and Address': 'name\naddres\naddress2', 'Party Identifier': '' }); // the fully optional party matches an empty string
   });
 
 

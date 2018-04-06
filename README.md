@@ -303,6 +303,7 @@ swift.on((msg) => {
 ### swift.send(message, outPath)
 Place swift message to outPath folder. Message could be a string or array of blocks.
 * message - string or array of blocks
+* filenamePrefix - outgoing filename prefix (default: '');
 * outPath - output folder path (default: `this.outputFolder`);
 
 ```

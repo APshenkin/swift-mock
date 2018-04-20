@@ -60,8 +60,8 @@ Initializes a new instance of `SWIFT Mock` using given metadata. If `metadata` i
 * `out` - folder, where mock will store answers for messages (default: `./out`)
 * `logLevel` - logging level (default: 0)
 * `fieldPatterns` - path to block 4 field patterns
-* `saveIncommingImages` - save parsed incomming messages in memory (default: `false`)
-* `delete` - delete incomming messages after reading (default: `false`)
+* `saveIncomingMessages` - save parsed incoming messages in memory (default: `false`)
+* `delete` - delete incoming messages after reading (default: `false`)
 * `elastic` - format log messages in Elastic format or not (default: `false`)
 
 ### swift.parse(swift)
@@ -284,7 +284,7 @@ Values that are `undefined` will displays like this `{SAC:}`
 
 
 ### swift.on(predicate, callback)
-Create a listener that will check incomming messages by predicate function and do callback
+Create a listener that will check incoming messages by predicate function and do callback
 * predicate - function
 * callback - function
 ```
@@ -340,10 +340,10 @@ Start swift listener
 Stop swift listener
 
 ### swift.cleanMessages()
-Clean saved incomming messages
+Clean saved incoming messages
 
 ### swift.getMessages()
-Get incomming messages
+Get incoming messages
 
 ### swift.cleanListeners()
 Clean listeners

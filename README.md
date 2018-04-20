@@ -63,6 +63,7 @@ Initializes a new instance of `SWIFT Mock` using given metadata. If `metadata` i
 * `saveIncomingMessages` - save parsed incoming messages in memory (default: `false`)
 * `delete` - delete incoming messages after reading (default: `false`)
 * `elastic` - format log messages in Elastic format or not (default: `false`)
+* `persistent` - indicates whether the process should continue to run as long as files are being watched. (default: `true`)
 
 ### swift.parse(swift)
 Parses the `swift` message. The line breaks of `swift` must be in Unix format (`\n`).
@@ -284,7 +285,26 @@ Values that are `undefined` will displays like this `{SAC:}`
 
 
 ### swift.on(predicate, callback)
-Create a listener that will check incoming messages by predicate function and do callback
+Create a listener that will check incoming messages by predicate function and do callback.
+For `swift.on` only first passed predicate will be applied
+* predicate - function
+* callback - function
+```
+swift.on((msg) => {
+    return msg.block1.receivingLtId === 'RMSFGB2LAXXX' && msg.block2.msgType === '509'
+}, (msg) => {
+    return [
+        { block: 1, data: { ...msg.block1, sequenceNumber: 300200 } },
+        { block: 2, data: { ...msg.block2 } },
+        { block: 4, data: msg.extraBlocks.block4 },
+        { block: 5, data: { ...msg.block5 } },
+        { block: 'S', data: { ...msg.blockS } }]
+})
+```
+
+###swift.onEvery(predicate, callback)
+Create a listener that will check incoming messages by predicate function and do callback.
+For `swift.onEvery` every passed predicate will be applied
 * predicate - function
 * callback - function
 ```

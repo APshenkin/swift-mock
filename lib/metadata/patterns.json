@@ -31,6 +31,14 @@
     "pattern": "6!n",
     "fieldNames": "(Date)"
   },
+  "30V": {
+    "pattern": "8!n",
+    "fieldNames": "(Date)"
+  },
+  "30T": {
+    "pattern": "8!n",
+    "fieldNames": "(Date)"
+  },
   "36": {
     "pattern": "12d",
     "fieldNames": "(Rate)"
@@ -118,6 +126,10 @@
   "20D": {
     "pattern": ":4!c//25x",
     "fieldNames": "(Qualifier)(Reference)"
+  },
+  "22A": {
+    "pattern": ":4!c",
+    "fieldNames": "(Value)"
   },
   "22F": {
     "pattern": ":4!c/[8c]/4!c",
@@ -355,6 +367,10 @@
     "pattern": "[/1!a][/34x]$4*35x",
     "fieldNames": "(Party Identifier)$(Name and Address)"
   },
+  "58J": {
+    "pattern": "5*40x",
+    "fieldNames": "(Party Identification)"
+  },
   "59": {
     "pattern": "[/34x]$4*35x",
     "fieldNames": "(Account Number)$(Name and Address)"
@@ -439,6 +455,10 @@
     "pattern": "6*35x",
     "fieldNames": "(Narrative)"
   },
+  "82J": {
+    "pattern": "5*40x",
+    "fieldNames":  "(Party Identification)"
+  },
   "83A": {
     "pattern": "[/1!a][/34x]$4!a2!a2!c[3!c]",
     "fieldNames": "(Party Identifier)$(Identifier Code)"
@@ -450,6 +470,10 @@
   "83D": {
     "pattern": "[/1!a][/34x]$4*35x",
     "fieldNames": "(Party Identifier)$(Name and Address)"
+  },
+  "83J": {
+    "pattern": "5*40x",
+    "fieldNames": "(Party Identification)"
   },
   "87A": {
     "pattern": "[/1!a][/34x]$4!a2!a2!c[3!c]",
@@ -550,6 +574,10 @@
   "93D": {
     "pattern": ":4!c//[N]15d",
     "fieldNames": "(Qualifier)(Sign)(Balance)"
+  },
+  "94A": {
+    "pattern": ":4!c",
+    "fieldNames": "(Scope)"
   },
   "94B": {
     "pattern": ":4!c/[8c]/4!c[/30x]",

@@ -1,7 +1,7 @@
 {
   "12": {
     "pattern": "3!n",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "19": {
     "pattern": "17d",
@@ -9,15 +9,15 @@
   },
   "20": {
     "pattern": "16x",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "21": {
     "pattern": "16x",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "23": {
     "pattern": "16x",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "25": {
     "pattern": "35x",
@@ -99,13 +99,21 @@
     "pattern": ":4!c//3!c/15d",
     "fieldNames": "(Qualifier)(Number Id)(Quantity)"
   },
+  "15A": {
+    "pattern": "",
+    "fieldNames": ""
+  },
+  "15B": {
+    "pattern": "",
+    "fieldNames": ""
+  },
   "16R": {
     "pattern": "16c",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "16S": {
     "pattern": "16c",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "17B": {
     "pattern": ":4!c//1!a",
@@ -157,7 +165,7 @@
   },
   "26H": {
     "pattern": "16x",
-    "fieldNames": ""
+    "fieldNames": "(Value)"
   },
   "28E": {
     "pattern": "5n/4!c",

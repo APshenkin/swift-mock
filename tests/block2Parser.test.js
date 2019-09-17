@@ -43,4 +43,3 @@ describe('Block2 Parser', () => {
     assert.equal(result.obsolescence, undefined);
   });
 });
-

@@ -6,6 +6,10 @@ const { FieldRegexpFactory } = ns;
 const patterns = {
   12: {
     pattern: '3!n',
+    fieldNames: '(Value)',
+  },
+  '15A': {
+    pattern: '',
     fieldNames: '',
   },
   19: {
@@ -68,7 +72,7 @@ describe('FieldRegexpFactory', () => {
   });
   it('unnamed field', () => {
     const r = factory.createRegexp('35x', '');
-    assert.equal(r, '^(?<Value>.{1,35})$');
+    assert.equal(r, '^.{1,35}$');
   });
   it('one field optional', () => {
     const r = factory.createRegexp('[35x]', '(Account)');
@@ -121,7 +125,7 @@ describe('FieldRegexpFactory', () => {
   });
   it('empty field names', () => {
     const r = factory.createRegexp('3!n', '');
-    assert.equal(r, '^(?<Value>.{3})$');
+    assert.equal(r, '^.{3}$');
   });
 
   // field merging
@@ -235,6 +239,10 @@ describe('FieldParser', () => {
   it('named field', () => {
     const result = parser.parse('19', '123456789');
     assert.deepEqual(result, { Amount: '123456789' });
+  });
+  it('sequence field', () => {
+    const result = parser.parse('15A', '');
+    assert.deepEqual(result, {});
   });
   it('optional part present', () => {
     const result = parser.parse('28', '1234/56');
